@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Category{% endblock %}
+
+{% block body %}
+    <h1>Category</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+               {% for category in category %}
+            <td>
+            <div class="card" style="width: 18rem;">
+            <div class="card-body">
+
+                <h5 class="card-title">{{ category.title }}</h5>
+                
+                <p class="card-text">{{ category.description }}</p>
+                
+                    <a class="card-link" href="#">show</a>
+                    <a class="card-link" href="#">edit</a>
+                </td>
+                </div></div>
+                {% else %}
+                <td colspan="4">no records found</td>
+                {% endfor %}
+            </tr>
+        </tbody>
+    </table>
+
+    
+    
+{% endblock %}

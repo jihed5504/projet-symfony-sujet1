@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Task{% endblock %}
+
+{% block body %}
+    <h1>Task</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ task.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ task.title }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ task.description }}</td>
+            </tr>
+            <tr>
+                <th>note</th>
+                {% if is_granted('ROLE_TEACHER') or is_granted('ROLE_STUDENT')%}
+                {% if task.note %}
+               <td> <h5>{{ task.note }} /20
+                 {% if is_granted('ROLE_TEACHER')%}
+                <button href="{{ path('note_add', {'id': task.id}) }}"  class="btn btn-secondary">edit</button></h5></td>
+                 {% endif %}
+                {% else %}
+                {% if is_granted('ROLE_TEACHER')%}
+                <td> <h5><a href="{{ path('note_add', {'id': task.id}) }}">add</a></h5></td>
+                {% endif %}
+                {% endif %}
+                {% endif %}
+                
+            </tr>
+            <tr>
+                <th>file</th>
+                <td><a href="{{ asset('uploads/') ~ filename }}" download>download</a></td>
+
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('task_index') }}">back to list</a>
+    {% if is_granted('ROLE_STUDENT') %}
+    <a href="{{ path('task_edit', {'id': task.id}) }}">edit</a>
+    {% endif %}
+    {{ include('task/_delete_form.html.twig') }}
+{% endblock %}
